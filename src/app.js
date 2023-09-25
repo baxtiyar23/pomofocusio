@@ -79,3 +79,6 @@ restartBtn.addEventListener("click", () => {
   restartBtn.style.display = "none";
   isPaused = false;
 });
+
+
+const se="";
