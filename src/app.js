@@ -5,7 +5,7 @@ const startBtn = document.getElementById("start");
 const restartBtn = document.getElementById("restart");
 const timeElm = document.querySelector("#time");
 let countDown;
-let isPaused = false;
+let isPaused = false
 
 
 
