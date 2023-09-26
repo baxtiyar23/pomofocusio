@@ -2,83 +2,48 @@ const pomodoroBtn = document.getElementById("Pomodoro");
 const shortBtn = document.getElementById("Short");
 const longBtn = document.getElementById("Long");
 const startBtn = document.getElementById("start");
-const restartBtn = document.getElementById("restart");
 const timeElm = document.querySelector("#time");
-let countDown;
-let isPaused = false
 
+let timerInterval; // Variable to hold the timer interval
 
+const startTimer = (minutes, seconds) => {
+  clearInterval(timerInterval); // Clear any existing timer interval
 
-function startTimer(mins, secs){
-  let totalSeconds = mins * 60 + secs;
+  let totalSeconds = minutes * 60 + seconds;
 
-  countDown = setInterval(()=>{
-    if(!isPaused){
-      if(totalSeconds<=0){
-        clearInterval(countDown);
-        startBtn.innerText = "Start";
-        restartBtn.style.display = "block";
-      }else{
-        const displayMins = Math.floor(totalSeconds/60);
-        const displaySecs = totalSeconds % 60;
-        timeElm.innerText = `${displayMins}:${displaySecs < 10 ? '0' : ''}${displaySecs}`;
-        totalSeconds--;
-      }
+  timerInterval = setInterval(() => {
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      return;
     }
+
+    const formattedMinutes = Math.floor(totalSeconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const formattedSeconds = (totalSeconds % 60).toString().padStart(2, "0");
+
+    timeElm.innerText = `${formattedMinutes}:${formattedSeconds}`;
+    totalSeconds--;
   }, 1000);
-}
+};
 
 longBtn.addEventListener("click", () => {
   document.body.style.background = "rgb(56, 133, 138)";
   timeElm.innerText = "15:00";
-  startBtn.innerText = "Start"
-  restartBtn.style.display = "none"
-  isPaused = false;
-  clearInterval(countDown);
+  const [minutes, seconds] = timeElm.innerText.split(":").map(Number);
+  startTimer(minutes, seconds);
 });
 
 shortBtn.addEventListener("click", () => {
   document.body.style.background = "#397097";
   timeElm.innerText = "5:00";
-  startBtn.innerText = "Start";
-  restartBtn.style.display = "none";
-  isPaused = false;
-  clearInterval(countDown);
+  const [minutes, seconds] = timeElm.innerText.split(":").map(Number);
+  startTimer(minutes, seconds);
 });
 
 pomodoroBtn.addEventListener("click", () => {
   document.body.style.background = "#ba4949";
   timeElm.innerText = "25:00";
-  startBtn.innerText = "Start";
-  restartBtn.style.display = "none";
-  isPaused = false;
-  clearInterval(countDown);
+  const [minutes, seconds] = timeElm.innerText.split(":").map(Number);
+  startTimer(minutes, seconds);
 });
-
-startBtn.addEventListener("click", () =>{
-  if(startBtn.innerText = "Start"){
-    startBtn.innerText = "Pause";
-    isPaused = false;
-    const [mins , secs] = timeElm.innerText.split(":").map(Number);
-    startTimer(mins, secs);
-  }else if(startBtn.innerText = "Pause"){
-    startBtn.innerText = "Res";
-    isPaused = true;
-  }else if(startBtn.innerText = "Res"){
-    startBtn.innerText = "Pause";
-    isPaused = false;
-    const [mins, secs] = timeElm.innerText.split(":").mao(Number);
-    startTimer(mins, secs);
-  }
-})
-
-restartBtn.addEventListener("click", () => {
-  const [mins, secs] = timeElm.innerText.split(":").map(Number);
-  startTimer(mins, secs);
-  startBtn.innerText = "Pause";
-  restartBtn.style.display = "none";
-  isPaused = false;
-});
-
-
-const se="";
